@@ -49,10 +49,14 @@ async function main() {
       author: "Samuel Green",
       date: "2023-08-10T09:15:00Z",
     },
-  ];
-  await Post.insertMany(posts)
-    .then(function(){console.log("success in inserting")})
-    .catch(function(err){console.log(err);})
+  ];const postCount = await Post.countDocuments({});
+  if (postCount === 0) {
+    // Insert data if the collection is empty
+    await Post.insertMany(posts);
+    console.log("Success in inserting");
+  }
+  
+  
   let lastId = 3;
   //Middleware
 
